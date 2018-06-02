@@ -1,0 +1,42 @@
+﻿using System;
+//using JetBrains.Annotations;
+using WebApplication1.IPG.OpenSSL.Common;
+namespace WebApplication1.IPG.OpenSSL.OpenSSL_X509Certificate2_Provider
+{
+    /// <summary>
+    /// BaseCertificateProvider to parse OpenSSL public and private key components. Based on http://www.jensign.com/opensslkey/opensslkey.cs
+    /// </summary>
+    public abstract class BaseCertificateProvider
+    {
+        private const string PublicKeyHeader = "-----BEGIN PUBLIC KEY-----";
+        private const string PublicKeyFooter = "-----END PUBLIC KEY-----";
+        private const string PublicCertificateHeader = "-----BEGIN CERTIFICATE-----";
+        private const string PublicCertificateFooter = "-----END CERTIFICATE-----";
+
+        /// <summary>
+        /// GetPublicKeyBytes
+        /// </summary>
+        /// <param name="publicText">The certificate or public key text.</param>
+        /// <returns>byte array</returns>
+        protected byte[] GetPublicKeyBytes( string publicText)
+        {
+            if (publicText == null)
+            {
+                throw new ArgumentNullException(nameof(publicText));
+            }
+
+            string text = publicText.Trim();
+            if (text.StartsWith(PublicKeyHeader) && text.EndsWith(PublicKeyFooter))
+            {
+                return DecoderUtils.ExtractBytes(text, PublicKeyHeader, PublicKeyFooter);
+            }
+
+            if (text.StartsWith(PublicCertificateHeader) && text.EndsWith(PublicCertificateFooter))
+            {
+                return DecoderUtils.ExtractBytes(text, PublicCertificateHeader, PublicCertificateFooter);
+            }
+
+            throw new NotSupportedException();
+        }
+    }
+}
