@@ -8,7 +8,7 @@
 3.Open Startup.cs and add configuration of api (function ConfigureServices)
 
 3.1.Set private key:
-For testing environment you can take them from https://devs.icards.eu/ipgtest/test_keys/
+For testing environment you can take them from https://dev-ipg.icards.eu/sandbox/test_keys/
 For production env must be given from iCard AD
 
 Example:
@@ -70,20 +70,20 @@ IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultMIDShopName("This is my shop");
 
 Example:
 ```aspx
-IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultNotifyURL("http://10.64.4.177:5100/ipg/notify");
-IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultOKURL("http://10.64.4.177:5100/OK");
-IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultCancelURL("http://10.64.4.177:5100/Cancel");
+IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultNotifyURL("https://yoursite.com/urlNotify");
+IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultOKURL("https://yoursite.com/urlOK");
+IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultCancelURL("https://yoursite.com/urlCancel");
 ```
 3.9.Set form action URL
 
 Development mode:
-https://devs.icards.eu/ipgtest/
+https://dev-ipg.icards.eu/sandbox/
 Production mode:
 https://ipg.icard.com/
 
 Example:
 ```aspx
-IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultURL("https://devs.icards.eu/ipgtest/");
+IPGGatewayAPILibrary.IPGGatewayAPI.SetDefaultURL("https://dev-ipg.icards.eu/sandbox/");
 ```
 
 3.10.If you have problems with loading you maj need ignore antiforgery token attribute to MVC service
@@ -168,12 +168,12 @@ Example:
 IPGPurchase Purchase = new IPGPurchase();
 
 IPGCart cart = new IPGCart("Test Product");
-cart.Price = 25.00m;
+cart.Price = 25.00;
 cart.Quantity = 1;
 
 Purchase.AddCart(cart);
-Purchase.Email = "ivelin.ksotov@icard.com";
-Purchase.CustomerIP = "10.64.4.177";
+Purchase.Email = "customer@email.com";
+Purchase.CustomerIP = "127.0.0.1";
 
 data = Purchase.GeneratePage();
 ```
